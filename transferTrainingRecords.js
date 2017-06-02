@@ -38,45 +38,9 @@ function convOldRecords(){
 }
 
 /**
- * fixDates
- * fixes old confusing dates format used on the sheet
+ * runDateFixer
+ * calls upon fixDates method to fix the dates on the specific range
  */
-function fixDates(sheetName, colNum, rowNum, rowLength){
-
-  var ss = SpreadsheetApp.getActiveSpreadsheet(); //Creates a variable to identify the associated google spreadsheet
-  var target = ss.getSheetByName(sheetName); //Creates a variable to identify the passed sheetName
-  target.insertColumnAfter(colNum); //insert a new colmun
-
-  for (var i=rowNum; i<=rowLength; i++){
-    var oldDate = target.getRange(i,colNum).getValue(); //Get the original date
-    oldDate = oldDate.trim(); //Removes any space characters from start and end
-    var arrOldDate = oldDate.split(""); //Creates an array with old date, each element contains each character
-
-    if (arrOldDate.length == 7 && isNaN(arrOldDate[0]) == false && isNaN(arrOldDate[1]) == false &&
-       isNaN(arrOldDate[2]) == true && isNaN(arrOldDate[3]) == true && isNaN(arrOldDate[4]) == true && 
-       isNaN(arrOldDate[5]) == false && isNaN(arrOldDate[6]) == false) { //if date is in DDMMMYY format
-        var arrNewDate = new Array(arrOldDate.length); //creates an array for corrected date
-        arrNewDate[0] = arrOldDate[5]; //transfer of first digit of the year
-        arrNewDate[1] = arrOldDate[6]; //transfer of second digit of the year
-        arrNewDate[2] = arrOldDate[2]; //transfer of first letter of month
-        arrNewDate[3] = arrOldDate[3]; //transfer of secand letter of month
-        arrNewDate[4] = arrOldDate[4]; //transfer of third letter of month
-        arrNewDate[5] = arrOldDate[0]; //transfer of first digit of the day
-        arrNewDate[6] = arrOldDate[1]; //transfer of second digit of the day
-        target.getRange(i,colNum+1).setValue(arrNewDate.toString()); //convert to string and store in the adjacent cell
-    } else if (arrOldDate.length == 6 && isNaN(arrOldDate[0]) == false && isNaN(arrOldDate[1]) == true &&
-       isNaN(arrOldDate[2]) == true && isNaN(arrOldDate[3]) == true && isNaN(arrOldDate[4]) == false && isNaN(arrOldDate[5]) == false) { //if date is in DDMMMYY format
-         var arrNewDate = new Array(arrOldDate.length+1); //creates an array for corrected date
-         arrNewDate[0] = arrOldDate[4]; //transfer of first digit of the year
-         arrNewDate[1] = arrOldDate[5]; //transfer of second digit of the year
-         arrNewDate[2] = arrOldDate[1]; //transfer of first letter of month
-         arrNewDate[3] = arrOldDate[2]; //transfer of secand letter of month
-         arrNewDate[4] = arrOldDate[3]; //transfer of third letter of month
-         arrNewDate[5] = "0"; //transfer of first digit of the day
-         arrNewDate[6] = arrOldDate[0]; //transfer of second digit of the day
-         target.getRange(i,colNum+1).setValue(arrNewDate.toString()); //convert to string and store in the adjacent cell
-    } else {
-      target.getRange(i,colNum+1).setValue("Invalid Date Format"); //Says "Invalid Date Format" in the adjacent cell
-    }
-  }
+function runDateFixer(){
+  fixDates("Copy of Starting Sep 2016 Brunsfield Qualifications",3,2,114);
 }
