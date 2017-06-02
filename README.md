@@ -1,2 +1,2 @@
 # mtc-datamigration
-Code blocks used to migrate data between google spreadsheets. Code was run on App Scripts.
+Code snippets used to migrate data between google spreadsheets. Code is run on Google App Scripts environment
