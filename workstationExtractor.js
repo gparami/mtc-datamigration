@@ -31,7 +31,7 @@ function extractWorkstation(sheetName, rowNum, colNum, noOfRows, noOfCols){
  * @return {string} withinBrackets string extracted from within brackets
  */
 function getWithinBrackets(fullstr){
-    fullstr = fullstr.toString();
+    fullstr = fullstr.toString(); //convert the variable passed to string because it might be in a different format
     var withinBrackets = fullstr.match(/\(([^)]+)\)/)[1] //Regex syntax to extract the string within the brackets
-    return withinBrackets;
+    return withinBrackets; //return the extracted string
 }
