@@ -22,6 +22,7 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
     var oldDate = target.getRange(rowNum,colNum).getValue(); //Get the original date
 
     if (oldDate.indexOf("(") != -1) { //checks for open bracket
+        var wsString = getWithinBrackets(oldDate); //get a string with content inside the brackets
         var posOpenBracket = oldDate.indexOf("("); //get the position of the open braket
         oldDate = oldDate.slice(0,posOpenBracket); //discard the brakets and keep just the date
     }
