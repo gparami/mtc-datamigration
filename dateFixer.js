@@ -22,7 +22,7 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
 
     if (oldDate.indexOf("(") != -1) { //checks for open bracket
         var posOpenBracket = oldDate.indexOf("("); //get the position of the open braket
-        oldDate = oldDate.slice(0,posOpenBracket-1); //discard the brakets and keep just the date
+        oldDate = oldDate.slice(0,posOpenBracket); //discard the brakets and keep just the date
     }
     
     oldDate = oldDate.trim(); //Removes any space characters from start and end
