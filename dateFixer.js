@@ -16,6 +16,7 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
   for (var i = 1; i <= noOfCols; i++){ //traverse the sheet on columns
       target.insertColumnAfter(colNum); //insert a new colmun
       rowNum = initialRowNum; //re-initialize rowNum variable
+      //target.getRange(rowNum-1,colNum).setValue(target.getRange(rowNum-1,colNum-1).getValue()); //copy the column name over to the new field
 
   for (var j=1; j<=noOfRows; j++){
     var oldDate = target.getRange(rowNum,colNum).getValue(); //Get the original date
