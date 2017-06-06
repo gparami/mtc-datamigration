@@ -13,13 +13,16 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
   var target = ss.getSheetByName(sheetName); //Creates a variable to identify the passed sheetName
   var initialRowNum = rowNum; //Records the initial row number passed
 
+
   for (var i = 1; i <= noOfCols; i++){ //traverse the sheet on columns
+      target.insertColumnAfter(colNum); //insert a new colmun
       target.insertColumnAfter(colNum); //insert a new colmun
       rowNum = initialRowNum; //re-initialize rowNum variable
       //target.getRange(rowNum-1,colNum).setValue(target.getRange(rowNum-1,colNum-1).getValue()); //copy the column name over to the new field
 
   for (var j=1; j<=noOfRows; j++){
     var oldDate = target.getRange(rowNum,colNum).getValue(); //Get the original date
+    var didConvert = false; //checks if the data converted successfully
 
     if (oldDate.indexOf("(") != -1) { //checks for open bracket
         var wsString = getWithinBrackets(oldDate); //get a string with content inside the brackets
@@ -48,6 +51,7 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
         arrNewDate[8] = arrOldDate[1]; //transfer of second digit of the day
         newDate =  arrNewDate.toString(); //convert to string and store in newDate variable
         newDate = newDate.replace(/,/g,""); //replace all occurences of "," after toString
+        didConvert = true; //flags confirming data was converted successfully
     } else if (arrOldDate.length == 6 && isNaN(arrOldDate[0]) == false && isNaN(arrOldDate[1]) == true &&
        isNaN(arrOldDate[2]) == true && isNaN(arrOldDate[3]) == true && isNaN(arrOldDate[4]) == false && isNaN(arrOldDate[5]) == false) { //if date is in DDMMMYY format
          arrNewDate[2] = arrOldDate[4]; //transfer of first digit of the year
@@ -59,12 +63,15 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
          arrNewDate[8] = arrOldDate[0]; //transfer of second digit of the day
          newDate =  arrNewDate.toString(); //convert to string and store in newDate variable
          newDate = newDate.replace(/,/g,""); //replace all occurences of "," after toString
+         didConvert = true; //flags confirming data was converted successfully
     } else {
          newDate = "Invalid Date Format"; //Says "Invalid Date Format" in the adjacent cell
+         didConvert = false; //flags confirming data was converted successfully
     }
+    target.getRange(rowNum,colNum+2).setValue(wsString); //store Workstation in the adjacent cell
     target.getRange(rowNum,colNum+1).setValue(newDate); //store newDate in the adjacent cell
     rowNum++;
   }
-    colNum = colNum + 2;
+    colNum = colNum + 3;
   }
 }
