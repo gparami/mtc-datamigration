@@ -68,7 +68,11 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
          newDate = "Invalid Date Format"; //Says "Invalid Date Format" in the adjacent cell
          didConvert = false; //flags confirming data was converted successfully
     }
-    target.getRange(rowNum,colNum+2).setValue(wsString); //store Workstation in the adjacent cell
+    
+    if ( wsString ) {
+         target.getRange(rowNum,colNum+2).setValue(wsString); //store Workstation in the adjacent cell
+    }
+
     target.getRange(rowNum,colNum+1).setValue(newDate); //store newDate in the adjacent cell
     rowNum++;
   }
