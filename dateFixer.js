@@ -39,6 +39,8 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
 
       if (oldDate == "") {
          newDate = ""; //adjacent cell will be empty
+         didConvert = false; //flags confirming data was not converted
+         continue;
     } else if (arrOldDate.length == 7 && isNaN(arrOldDate[0]) == false && isNaN(arrOldDate[1]) == false &&
        isNaN(arrOldDate[2]) == true && isNaN(arrOldDate[3]) == true && isNaN(arrOldDate[4]) == true && 
        isNaN(arrOldDate[5]) == false && isNaN(arrOldDate[6]) == false) { //if date is in DDMMMYY format
@@ -66,14 +68,18 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
          didConvert = true; //flags confirming data was converted successfully
     } else {
          newDate = "Invalid Date Format"; //Says "Invalid Date Format" in the adjacent cell
-         didConvert = false; //flags confirming data was converted successfully
-    }
-    
-    if ( wsString ) {
-         target.getRange(rowNum,colNum+2).setValue(wsString); //store Workstation in the adjacent cell
+         didConvert = false; //flags confirming data was not converted
     }
 
-    target.getRange(rowNum,colNum+1).setValue(newDate); //store newDate in the adjacent cell
+    if ( wsString || didConvert == false) {
+        target.getRange(rowNum,colNum+1).setValue(newDate); //store newDate in the adjacent cell
+        target.getRange(rowNum,colNum+2).setValue(wsString); //store Workstation in the adjacent cell
+         wsString = "";
+    }
+    if (didConvert == true) {
+         target.getRange(rowNum,colNum+1).setValue(newDate); //store newDate in the adjacent cell
+    }
+    
     rowNum++;
   }
     colNum = colNum + 3;
