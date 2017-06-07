@@ -22,6 +22,7 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
 
   for (var j=1; j<=noOfRows; j++){
     var oldDate = target.getRange(rowNum,colNum).getValue(); //Get the original date
+    oldDate = oldDate.replace(/\s+/g, ''); //removes whitespaces globally
     var didConvert = false; //checks if the data converted successfully
 
     if (oldDate.indexOf("(") != -1) { //checks for open bracket
@@ -30,7 +31,6 @@ function fixDates(sheetName, colNum, rowNum, noOfCols, noOfRows){
         oldDate = oldDate.slice(0,posOpenBracket); //discard the brakets and keep just the date
     }
     
-    oldDate = oldDate.trim(); //Removes any space characters from start and end
     var arrOldDate = oldDate.split(""); //Creates an array with old date, each element contains each character
     var newDate; //Creates an variable to store new date
     var arrNewDate = new Array(9); //creates an array for corrected date
