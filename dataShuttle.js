@@ -12,29 +12,34 @@
 function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
 
     //parameters are defined here, just to make it easy to execute on google app scripts
-    var fromSheet = "OriName",
+    var fromSheet = "Starting Sep 2004 Qualifications",
         toSheet = "OneSheetToRuleThemAll",
-        trainingColumn = 1,
+        trainingColumn = 6,
         row = 2,
         column = 1,
-        numRows = 100,
-        numColumns = 10;
+        numRows = 7,
+        numColumns = 7;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
-    var originSheet = SpreadsheetApp.getSheetByName(fromSheet);
-    var destinationSheet = SpreadsheetApp.getSheetByName(toSheet);
+    var activeSS = SpreadsheetApp.getActiveSpreadsheet();
+    var originSheet = activeSS.getSheetByName(fromSheet);
+    var destinationSheet = activeSS.getSheetByName(toSheet);
     var arrOriginRecords = SpreadsheetApp.getSheetByName(originSheet).getRange(row, column, numRows, numColumns).getValues();
 
     //dynamic location variables from the original sheet
     var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
+    var oriTrainingDate = trainingColumn;
+    //var oriWorkstation = trainingColumn + 1;
+
     var oriFirstName = 2;
     var oriLastName = 3;
     var oriStudentID = 4;
-    var oriRemarks = 5
+    //var oriRemarks = 5;
+    //var oriProgram = 4;
     //var oriClass = 5;
     //var oriSection = 6;
-    var oriTrainingDate = trainingColumn;
-    var oriWorkstation = trainingColumn + 1;
+    
+    
 
     //fixed location variables from the destination sheet
     var desNextEmptyRow = destinationSheet.getLastRow()+1,
@@ -57,20 +62,28 @@ function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
     
     //traverse through the imported data and create records in the destination sheet
     for (i = 0; i < arrOriginRecords.length; i++) {
-        destinationSheet.getRange(desNextEmptyRow, desFirstName).setValue(arrOriginRecords[i][oriFirstName-1]);
-        destinationSheet.getRange(desNextEmptyRow, desLastName).setValue(arrOriginRecords[i][oriLastName-1]);
-        destinationSheet.getRange(desNextEmptyRow, desStudentID).setValue(arrOriginRecords[i][oriStudentID-1]);
-        destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
-        //destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
-        //destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
-        destinationSheet.getRange(desNextEmptyRow, desTrainingType).setValue(oriTrainingType);
-        destinationSheet.getRange(desNextEmptyRow, desTrainingDate).setValue(arrOriginRecords[i][oriTrainingDate-1]);
-
-        //unorthodox data collected will be added as remarks on each record in the new database
-        var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
-        var Remarks = arrOriginRecords[i][oriRemarks-1] + arrOriginRecords[i][oriWorkstation-1];
-        destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(arrOriginRecords[i][oriRemarks-1]);
-        desNextEmptyRow++;
+        if (arrOriginRecords[i][oriTrainingDate-1] == "") {
+            //mandatory data
+            destinationSheet.getRange(desNextEmptyRow, desFirstName).setValue(arrOriginRecords[i][oriFirstName-1]);
+            destinationSheet.getRange(desNextEmptyRow, desLastName).setValue(arrOriginRecords[i][oriLastName-1]);
+            destinationSheet.getRange(desNextEmptyRow, desStudentID).setValue(arrOriginRecords[i][oriStudentID-1]);
+            destinationSheet.getRange(desNextEmptyRow, desTrainingType).setValue(oriTrainingType);
+            destinationSheet.getRange(desNextEmptyRow, desTrainingDate).setValue(arrOriginRecords[i][oriTrainingDate-1]);
+            
+            //only when available data
+            //destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
+            //destinationSheet.getRange(desNextEmptyRow, desProgram).setValue(arrOriginRecords[i][oriProgram-1]);
+            //destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
+            //destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
+            
+            
+            //unorthodox data collected will be added as remarks on each record in the new database
+            //var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
+            //var Remarks = arrOriginRecords[i][oriRemarks-1] + ", " + arrOriginRecords[i][oriWorkstation-1];
+            //destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(Remarks);
+            desNextEmptyRow++;
+        }
+        
     }        
 }
 
