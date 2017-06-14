@@ -14,43 +14,53 @@ function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
     var originSheet = SpreadsheetApp.getSheetByName(fromSheet); //get the origin sheet
     var destinationSheet = SpreadsheetApp.getSheetByName(toSheet); //get the destination sheet
     var arrOriginRecords = SpreadsheetApp.getSheetByName(originSheet).getRange(row, column, numRows, numColumns).getValues(); //gets the origin records in an array
-    var destLastRow = destinationSheet.getLastRow(); //get the position of the last row that has content on destination sheet
     
-    //fixed location variables from the destination sheet
-    var desStudentID = 2; 
-    var desFullName = 3; 
-    var desFirstName = 4;
-    var desLastName = 5;
-    var desClass = 12;
-    var desSection = 13; 
-    var desProgram = 8; 
-    var desTrainingType = 9;
-    var desTrainingDate = 10;
-    var desInstructor = 11;
-    var desWorkshop = 14;
-    var desWorkstation = 15;
-    var desRemarks =  16;
-
     //dynamic location variables from the original sheet
-    var oriStudentID = 4;
-    var oriFullName = 1;
+    var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
     var oriFirstName = 2;
     var oriLastName = 3;
-    var oriClass = 5;
-    var oriSection = 6;
-    var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
+    var oriStudentID = 4;
+    var oriRemarks = 5
+    //var oriClass = 5;
+    //var oriSection = 6;
     var oriTrainingDate = trainingColumn;
     var oriWorkstation = trainingColumn + 1;
-    var oriRemarks = trainingColumn + 1;
+
+    //fixed location variables from the destination sheet
+    var desNextEmptyRow = destinationSheet.getLastRow()+1,
+        desTrainingID = 1,
+        desStudentID = 2,
+        desFullName = 3,
+        desFirstName = 4,
+        desLastName = 5,
+        desEmail = 6,
+        desFaculty = 7,
+        desProgram = 8,
+        desTrainingType = 9,
+        desTrainingDate = 10,
+        desInstructor = 11,
+        desClass = 12,
+        desSection = 13,
+        desWorkshop = 14,
+        desWorkstation = 15,
+        desRemarks =  16;
     
     //traverse through the imported data and create records in the destination sheet
-    for (i = 0; i <= arrOriginRecords.length; i++) {
-        var desNextEmptyRow = destLastRow + 1
-        destinationSheet.getRange(desNextEmptyRow, desStudentID).setValue(arrOriginRecords[i][oriStudentID-1]);
-        destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
+    for (i = 0; i < arrOriginRecords.length; i++) {
         destinationSheet.getRange(desNextEmptyRow, desFirstName).setValue(arrOriginRecords[i][oriFirstName-1]);
         destinationSheet.getRange(desNextEmptyRow, desLastName).setValue(arrOriginRecords[i][oriLastName-1]);
-        destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
+        destinationSheet.getRange(desNextEmptyRow, desStudentID).setValue(arrOriginRecords[i][oriStudentID-1]);
+        destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
+        //destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
+        //destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
+        destinationSheet.getRange(desNextEmptyRow, desTrainingType).setValue(oriTrainingType);
+        destinationSheet.getRange(desNextEmptyRow, desTrainingDate).setValue(arrOriginRecords[i][oriTrainingDate-1]);
+
+        //unorthodox data collected will be added as remarks on each record in the new database
+        var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
+        var Remarks = arrOriginRecords[i][oriRemarks-1] + arrOriginRecords[i][oriWorkstation-1];
+        destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(arrOriginRecords[i][oriRemarks-1])
+        desNextEmptyRow++;
     }        
 }
 
