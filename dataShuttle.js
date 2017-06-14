@@ -9,7 +9,7 @@
  * @param {integer} numRows the hight in rows of the target migration range
  * @param {integer} numColumns the width in columns of the target migration range for one training
  */
-function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
+function migrate(){
 
     //parameters are defined here, just to make it easy to execute on google app scripts
     var fromSheet = "Starting Sep 2004 Qualifications",
@@ -24,7 +24,8 @@ function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
     var originSheet = activeSS.getSheetByName(fromSheet);
     var destinationSheet = activeSS.getSheetByName(toSheet);
-    var arrOriginRecords = SpreadsheetApp.getSheetByName(originSheet).getRange(row, column, numRows, numColumns).getValues();
+    var arrOriginRecords = originSheet.getRange(row, column, numRows, numColumns).getValues();
+    //var arrOriginRecords = SpreadsheetApp.getActiveSheet().getRange(2, 3, 6, 4).getValues();
 
     //dynamic location variables from the original sheet
     var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
@@ -62,7 +63,8 @@ function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
     
     //traverse through the imported data and create records in the destination sheet
     for (i = 0; i < arrOriginRecords.length; i++) {
-        if (arrOriginRecords[i][oriTrainingDate-1] == "") {
+        
+      if (arrOriginRecords[i][oriTrainingDate-1].toString() != "") {
             //mandatory data
             destinationSheet.getRange(desNextEmptyRow, desFirstName).setValue(arrOriginRecords[i][oriFirstName-1]);
             destinationSheet.getRange(desNextEmptyRow, desLastName).setValue(arrOriginRecords[i][oriLastName-1]);
