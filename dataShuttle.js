@@ -11,10 +11,20 @@
  */
 function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
 
-    var originSheet = SpreadsheetApp.getSheetByName(fromSheet); //get the origin sheet
-    var destinationSheet = SpreadsheetApp.getSheetByName(toSheet); //get the destination sheet
-    var arrOriginRecords = SpreadsheetApp.getSheetByName(originSheet).getRange(row, column, numRows, numColumns).getValues(); //gets the origin records in an array
-    
+    //parameters are defined here, just to make it easy to execute on google app scripts
+    var fromSheet = "OriName",
+        toSheet = "OneSheetToRuleThemAll",
+        trainingColumn = 1,
+        row = 2,
+        column = 1,
+        numRows = 100,
+        numColumns = 10;
+
+    //initializing the spreadsheet and extracting data to arrays for faster operations
+    var originSheet = SpreadsheetApp.getSheetByName(fromSheet);
+    var destinationSheet = SpreadsheetApp.getSheetByName(toSheet);
+    var arrOriginRecords = SpreadsheetApp.getSheetByName(originSheet).getRange(row, column, numRows, numColumns).getValues();
+
     //dynamic location variables from the original sheet
     var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
     var oriFirstName = 2;
