@@ -59,7 +59,7 @@ function migrate(fromSheet, toSheet, trainingColumn, row, numRows, numColumns){
         //unorthodox data collected will be added as remarks on each record in the new database
         var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
         var Remarks = arrOriginRecords[i][oriRemarks-1] + arrOriginRecords[i][oriWorkstation-1];
-        destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(arrOriginRecords[i][oriRemarks-1])
+        destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(arrOriginRecords[i][oriRemarks-1]);
         desNextEmptyRow++;
     }        
 }
@@ -77,8 +77,10 @@ function columnSearch(sheetName, row) {
     var index
     
     for (var i = 0; i < sheet.getLastColumn(); i++) {
-        var compObject = arrValues[i].toString(); //get
-        if (arrValues[i] == searchString
+        var compObject = arrValues[i].toString();
+        if (arrValues[i] == searchString){
+            //TODO
+        }
     }
 }
 
