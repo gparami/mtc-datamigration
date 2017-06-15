@@ -16,29 +16,27 @@ function migrate(){
         row = 2,
         column = 1,
         //dynamic parameters
-        fromSheet = "CON_Starting Sep 2011 Qualifications",
-        numRows = 81,
-        numColumns = 9,
-        trainingColumn = 7;
+        fromSheet = "Randoms",
+        numRows = 268,
+        numColumns = 24,
+        trainingColumn = 8;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
     var originSheet = activeSS.getSheetByName(fromSheet);
     var destinationSheet = activeSS.getSheetByName(toSheet);
     var arrOriginRecords = originSheet.getRange(row, column, numRows, numColumns).getValues();
-    //var arrOriginRecords = SpreadsheetApp.getActiveSheet().getRange(2, 3, 6, 4).getValues();
 
     //dynamic location variables from the original sheet
     var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
     var oriTrainingDate = trainingColumn;
-    //var oriWorkstation = trainingColumn + 1;
+    var oriWorkstation = trainingColumn + 1;
 
-    var oriFirstName = 2;
-    var oriLastName = 3;
-    var oriStudentID = 4;
-  
+    var oriFirstName = 1;
+    var oriLastName = 2;
+    var oriStudentID = 3;
     var oriRemarks = 5;
-    //var oriProgram = 4;
+    var oriProgram = 4;
     //var oriClass = 5;
     //var oriSection = 6;
     
@@ -76,15 +74,15 @@ function migrate(){
             
             //only when available data
             //destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
-            //destinationSheet.getRange(desNextEmptyRow, desProgram).setValue(arrOriginRecords[i][oriProgram-1]);
+            destinationSheet.getRange(desNextEmptyRow, desProgram).setValue(arrOriginRecords[i][oriProgram-1]);
             //destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
             //destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
             
             
             //unorthodox data collected will be added as remarks on each record in the new database
             //var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
-            //var Remarks = arrOriginRecords[i][oriRemarks-1] + ", " + arrOriginRecords[i][oriWorkstation-1];
-            var Remarks = arrOriginRecords[i][oriRemarks-1];
+            var Remarks = arrOriginRecords[i][oriRemarks-1].toString() + ", " + arrOriginRecords[i][oriWorkstation-1].toString();
+            //var Remarks = arrOriginRecords[i][oriRemarks-1];
             
             destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(Remarks);
             desNextEmptyRow++;
