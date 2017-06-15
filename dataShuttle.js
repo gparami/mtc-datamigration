@@ -19,7 +19,7 @@ function migrate(){
         fromSheet = "CON_Starting Sep 2011 Qualifications",
         numRows = 81,
         numColumns = 9,
-        trainingColumn = 8;
+        trainingColumn = 7;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
@@ -37,7 +37,7 @@ function migrate(){
     var oriLastName = 3;
     var oriStudentID = 4;
   
-    //var oriRemarks = 5;
+    var oriRemarks = 5;
     //var oriProgram = 4;
     //var oriClass = 5;
     //var oriSection = 6;
@@ -84,7 +84,9 @@ function migrate(){
             //unorthodox data collected will be added as remarks on each record in the new database
             //var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
             //var Remarks = arrOriginRecords[i][oriRemarks-1] + ", " + arrOriginRecords[i][oriWorkstation-1];
-            //destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(Remarks);
+            var Remarks = arrOriginRecords[i][oriRemarks-1];
+            
+            destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(Remarks);
             desNextEmptyRow++;
         }
         
