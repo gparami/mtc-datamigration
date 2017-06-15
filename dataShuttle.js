@@ -12,13 +12,14 @@
 function migrate(){
 
     //parameters are defined here, just to make it easy to execute on google app scripts
-    var fromSheet = "Starting Sep 2004 Qualifications",
-        toSheet = "OneSheetToRuleThemAll",
-        trainingColumn = 6,
+    var toSheet = "OneSheetToRuleThemAll",
         row = 2,
         column = 1,
-        numRows = 7,
-        numColumns = 7;
+        //dynamic parameters
+        fromSheet = "CON_Starting Sep 2011 Qualifications",
+        numRows = 81,
+        numColumns = 9,
+        trainingColumn = 8;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
@@ -35,6 +36,7 @@ function migrate(){
     var oriFirstName = 2;
     var oriLastName = 3;
     var oriStudentID = 4;
+  
     //var oriRemarks = 5;
     //var oriProgram = 4;
     //var oriClass = 5;
