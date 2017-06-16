@@ -19,7 +19,7 @@ function migrate(){
         fromSheet = "Randoms",
         numRows = 268,
         numColumns = 24,
-        trainingColumn = 8;
+        trainingColumn = 10;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
@@ -31,6 +31,9 @@ function migrate(){
     var oriTrainingType = originSheet.getRange(1,trainingColumn).getValue();
     var oriTrainingDate = trainingColumn;
     var oriWorkstation = trainingColumn + 1;
+    
+    var isWSRemark = true;
+    var remarksAvailable = true;
 
     var oriFirstName = 1;
     var oriLastName = 2;
@@ -39,6 +42,7 @@ function migrate(){
     var oriProgram = 4;
     //var oriClass = 5;
     //var oriSection = 6;
+    
     
     
 
@@ -80,11 +84,21 @@ function migrate(){
             
             
             //unorthodox data collected will be added as remarks on each record in the new database
-            //var Remarks = arrOriginRecords[i][oriRemarks-1].concat(arrOriginRecords[i][oriWorkstation-1]);
-            var Remarks = arrOriginRecords[i][oriRemarks-1].toString() + ", " + arrOriginRecords[i][oriWorkstation-1].toString();
-            //var Remarks = arrOriginRecords[i][oriRemarks-1];
+            if (remarksAvailable = true) {var realRemark = arrOriginRecords[i][oriRemarks-1].toString();}
+            if (isWSRemark == true) {var wsRemark = arrOriginRecords[i][oriWorkstation-1].toString();}
+
+            if      (remarksAvailable == true && realRemark == "" && isWSRemark == true && wsRemark == "") {var Remarks = "";}
+            else if (remarksAvailable == true && realRemark == "" && isWSRemark == true && wsRemark != "") {var Remarks = wsRemark;}
+            else if (remarksAvailable == true && realRemark != "" && isWSRemark == true && wsRemark == "") {var Remarks = realRemark;}
+            else if (remarksAvailable == true && realRemark != "" && isWSRemark == true && wsRemark != "") {var Remarks = realRemark + ", " + wsRemark}
+            else if (remarksAvailable == true && realRemark != "" && isWSRemark == false){var Remarks = realRemark;}
+            else if (remarksAvailable == true && realRemark == "" && isWSRemark == false){var Remarks = "";}
+            else if (remarksAvailable == false && isWSRemark == true && wsRemark == ""){var Remarks = "";}
+            else if (remarksAvailable == false && isWSRemark == true && wsRemark != ""){var Remarks = wsRemark;}
+            else if (remarksAvailable == false && isWSRemark == false) {var Remarks = "";}
             
             destinationSheet.getRange(desNextEmptyRow, desRemarks).setValue(Remarks);
+            
             desNextEmptyRow++;
         }
         
