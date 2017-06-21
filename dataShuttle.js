@@ -16,10 +16,10 @@ function migrate(){
         row = 2,
         column = 1,
         //dynamic parameters
-        fromSheet = "Randoms",
-        numRows = 268,
-        numColumns = 24,
-        trainingColumn = 10;
+        fromSheet = "Starting Sep 2016 MTC Lees",
+        numRows = 603,
+        numColumns = 15,
+        trainingColumn = 13;
 
     //initializing the spreadsheet and extracting data to arrays for faster operations
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
@@ -32,19 +32,16 @@ function migrate(){
     var oriTrainingDate = trainingColumn;
     var oriWorkstation = trainingColumn + 1;
     
-    var isWSRemark = true;
+    var isWSRemark = false;
     var remarksAvailable = true;
 
-    var oriFirstName = 1;
-    var oriLastName = 2;
-    var oriStudentID = 3;
-    var oriRemarks = 5;
-    var oriProgram = 4;
-    //var oriClass = 5;
-    //var oriSection = 6;
-    
-    
-    
+    var oriFirstName = 2;
+    var oriLastName = 3;
+    var oriStudentID = 4;
+    var oriRemarks = 15;
+    //var oriProgram = 4;
+    var oriClass = 5;
+    var oriSection = 6;   
 
     //fixed location variables from the destination sheet
     var desNextEmptyRow = destinationSheet.getLastRow()+1,
@@ -77,10 +74,11 @@ function migrate(){
             destinationSheet.getRange(desNextEmptyRow, desTrainingDate).setValue(arrOriginRecords[i][oriTrainingDate-1]);
             
             //only when available data
+            destinationSheet.getRange(desNextEmptyRow, desWorkstation).setValue(arrOriginRecords[i][oriWorkstation-1]);
             //destinationSheet.getRange(desNextEmptyRow, desFullName).setValue(arrOriginRecords[i][oriFullName-1]);
-            destinationSheet.getRange(desNextEmptyRow, desProgram).setValue(arrOriginRecords[i][oriProgram-1]);
-            //destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
-            //destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
+            //destinationSheet.getRange(desNextEmptyRow, desProgram).setValue(arrOriginRecords[i][oriProgram-1]);
+            destinationSheet.getRange(desNextEmptyRow, desClass).setValue(arrOriginRecords[i][oriClass-1]);
+            destinationSheet.getRange(desNextEmptyRow, desSection).setValue(arrOriginRecords[i][oriSection-1]);
             
             
             //unorthodox data collected will be added as remarks on each record in the new database
