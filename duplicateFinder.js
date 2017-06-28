@@ -19,7 +19,7 @@ function duplicateFinder() {
         //if found
             //get the row number from array position (+1)
             //write the record on removed sheet (next empty)
-            //delete the row with the records (mind: when a row is deleted the counter should skip one)
+            //delete the row with the records (mind: when a row is deleted the target should decrement by one)
 
     //set next record as current record
 
