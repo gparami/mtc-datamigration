@@ -54,8 +54,23 @@ function duplicateFinder() {
                 arrOperatingRecords[opCounter][TrainingType] == arrOperatingRecords[coCounter][TrainingType]) {
                 
                 //write the record on removed sheet (next empty)
-                trashPointer = trashSheet.getLastRow()+1;
-            
+                trashWriter(arrOperatingRecords[coCounter][TrainingID],
+                            arrOperatingRecords[coCounter][StudentID],
+                            arrOperatingRecords[coCounter][FullName],
+                            arrOperatingRecords[coCounter][FirstName],
+                            arrOperatingRecords[coCounter][LastName],
+                            arrOperatingRecords[coCounter][Email],
+                            arrOperatingRecords[coCounter][Faculty],
+                            arrOperatingRecords[coCounter][Program],
+                            arrOperatingRecords[coCounter][TrainingType],
+                            arrOperatingRecords[coCounter][TrainingDate],
+                            arrOperatingRecords[coCounter][Instructor],
+                            arrOperatingRecords[coCounter][Course],
+                            arrOperatingRecords[coCounter][Section],
+                            arrOperatingRecords[coCounter][Workshop],
+                            arrOperatingRecords[coCounter][Workstation],
+                            arrOperatingRecords[coCounter][Remarks],
+                            arrOperatingRecords[coCounter][Duplicate]);
 
                 //get the row number from array position (+1)
 
