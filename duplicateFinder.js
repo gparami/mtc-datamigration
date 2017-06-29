@@ -37,7 +37,7 @@ function duplicateFinder() {
     for (var operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
 
         //loop through to find a duplicate
-        for (var comparisonPointer = 1; comparisonPointer < lastRecord; comparisonPointer++) {
+        for (var comparisonPointer = operatingPointer + 1 ; comparisonPointer < lastRecord; comparisonPointer++) {
             
             //if duplicate found
             if (arrOperatingRecords[operatingPointer][StudentID] == arrOperatingRecords[comparisonPointer][StudentID] &&
