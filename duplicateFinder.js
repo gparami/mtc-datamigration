@@ -31,15 +31,13 @@ function duplicateFinder() {
         Duplicate = 16;
 
     //Variables for looping
-    var operatingPointer,
-        comparisonPointer,
-        lastRecord = arrOperatingRecords.length;
+    var lastRecord = arrOperatingRecords.length;
 
     //loop: Get current record
-    for (operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
+    for (var operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
 
         //loop through to find a duplicate
-        for (comparisonPointer = 1; comparisonPointer < lastRecord; comparisonPointer++) {
+        for (var comparisonPointer = 1; comparisonPointer < lastRecord; comparisonPointer++) {
             
             //if duplicate found
             if (arrOperatingRecords[operatingPointer][StudentID] == arrOperatingRecords[comparisonPointer][StudentID] &&
@@ -67,22 +65,15 @@ function duplicateFinder() {
                             arrOperatingRecords[comparisonPointer][Remarks],
                             arrOperatingRecords[comparisonPointer][Duplicate]);
 
-                //get the row number from array position (+1)
-                operatingSheet.deleteRow(comparisonPointer+1);
+                //get the row number from array position (+2 because 1st for header 2nd for array)
+                operatingSheet.deleteRow(comparisonPointer+2);
 
                 //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
-                arrOperatingRecords.splice(comparisonPointer,1);
+                arrOperatingRecords[].splice(comparisonPointer,1);
+                lastRecord--;
             }
         }
-            
-
-        //set next record as current record
-
     }
-
-    
-
-
 }
 /**
  * trashWriter
