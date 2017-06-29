@@ -7,6 +7,7 @@ function duplicateFinder() {
     //Variables for the database connection
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
     var operatingSheet = activeSS.getSheetByName("JS_ONE_SHEET_TO_RULE_THEM_ALL");
+    var trashSheet = activeSS.getSheetByName("REMOVED_RECORDS");
 
     //Variables for the data structure
     var arrOperatingRecords = operatingSheet.getRange(2, 1, 3321, 17).getValues();
@@ -47,23 +48,24 @@ function duplicateFinder() {
                 arrOperatingRecords[operatingPointer][TrainingType] == arrOperatingRecords[comparisonPointer][TrainingType]) {
                 
                 //write the record on removed sheet (next empty)
-                trashWriter(arrOperatingRecords[comparisonPointer][TrainingID],
-                            arrOperatingRecords[comparisonPointer][StudentID],
-                            arrOperatingRecords[comparisonPointer][FullName],
-                            arrOperatingRecords[comparisonPointer][FirstName],
-                            arrOperatingRecords[comparisonPointer][LastName],
-                            arrOperatingRecords[comparisonPointer][Email],
-                            arrOperatingRecords[comparisonPointer][Faculty],
-                            arrOperatingRecords[comparisonPointer][Program],
-                            arrOperatingRecords[comparisonPointer][TrainingType],
-                            arrOperatingRecords[comparisonPointer][TrainingDate],
-                            arrOperatingRecords[comparisonPointer][Instructor],
-                            arrOperatingRecords[comparisonPointer][Course],
-                            arrOperatingRecords[comparisonPointer][Section],
-                            arrOperatingRecords[comparisonPointer][Workshop],
-                            arrOperatingRecords[comparisonPointer][Workstation],
-                            arrOperatingRecords[comparisonPointer][Remarks],
-                            arrOperatingRecords[comparisonPointer][Duplicate]);
+                var trashPointer = trashSheet.getLastRow()+1;
+                trashSheet.getRange(trashPointer, TrainingID+1).setValue(arrOperatingRecords[comparisonPointer][TrainingID]);
+                trashSheet.getRange(trashPointer, StudentID+1).setValue(arrOperatingRecords[comparisonPointer][StudentID]);
+                trashSheet.getRange(trashPointer, FullName+1).setValue(arrOperatingRecords[comparisonPointer][FullName]);
+                trashSheet.getRange(trashPointer, FirstName+1).setValue(arrOperatingRecords[comparisonPointer][FirstName]);
+                trashSheet.getRange(trashPointer, LastName+1).setValue(arrOperatingRecords[comparisonPointer][LastName]);
+                trashSheet.getRange(trashPointer, Email+1).setValue(arrOperatingRecords[comparisonPointer][Email]);
+                trashSheet.getRange(trashPointer, Faculty+1).setValue(arrOperatingRecords[comparisonPointer][Faculty]);
+                trashSheet.getRange(trashPointer, Program+1).setValue(arrOperatingRecords[comparisonPointer][Program]);
+                trashSheet.getRange(trashPointer, TrainingType+1).setValue(arrOperatingRecords[comparisonPointer][TrainingType]);
+                trashSheet.getRange(trashPointer, TrainingDate+1).setValue(arrOperatingRecords[comparisonPointer][TrainingDate]);
+                trashSheet.getRange(trashPointer, Instructor+1).setValue(arrOperatingRecords[comparisonPointer][Instructor]);
+                trashSheet.getRange(trashPointer, Course+1).setValue(arrOperatingRecords[comparisonPointer][Course]);
+                trashSheet.getRange(trashPointer, Section+1).setValue(arrOperatingRecords[comparisonPointer][Section]);
+                trashSheet.getRange(trashPointer, Workshop+1).setValue(arrOperatingRecords[comparisonPointer][Workshop]);
+                trashSheet.getRange(trashPointer, Workstation+1).setValue(arrOperatingRecords[comparisonPointer][Workstation]);
+                trashSheet.getRange(trashPointer, Remarks+1).setValue(arrOperatingRecords[comparisonPointer][Remarks]);
+                trashSheet.getRange(trashPointer, Duplicate+1).setValue(arrOperatingRecords[comparisonPointer][Duplicate]);
 
                 //get the row number from array position (+2 because 1st for header 2nd for array)
                 operatingSheet.deleteRow(comparisonPointer+2);
@@ -74,49 +76,4 @@ function duplicateFinder() {
             }
         }
     }
-}
-/**
- * trashWriter
- * writes records into removed records sheet
- */
-function trashWriter(TrainingID, StudentID, FullName, FirstName, LastName, Email, Faculty, Program, TrainingType, TrainingDate, Instructor, Course, Section, Workshop, Workstation, Remarks, Duplicate){
-    
-    var activeSS = SpreadsheetApp.getActiveSpreadsheet(),
-        trashSheet = activeSS.getSheetByName("REMOVED_RECORDS"),
-        trashPointer = trashSheet.getLastRow()+1,
-        trashTrainingID = 0,
-        trashStudentID = 1,
-        trashFullName = 2,
-        trashFirstName = 3,
-        trashLastName = 4,
-        trashEmail = 5,
-        trashFaculty = 6,
-        trashProgram = 7,
-        trashTrainingType = 8,
-        trashTrainingDate = 9,
-        trashInstructor = 10,
-        trashCourse = 11,
-        trashSection = 12,
-        trashWorkshop = 13,
-        trashWorkstation = 14,
-        trashRemarks =  15,
-        trashDuplicate = 16;
-    
-    trashSheet.getRange(trashPointer, trashTrainingID).setValue(TrainingID);
-    trashSheet.getRange(trashPointer, trashStudentID).setValue(StudentID);
-    trashSheet.getRange(trashPointer, trashFullName).setValue(FullName);
-    trashSheet.getRange(trashPointer, trashFirstName).setValue(FirstName);
-    trashSheet.getRange(trashPointer, trashLastName).setValue(LastName);
-    trashSheet.getRange(trashPointer, trashEmail).setValue(Email);
-    trashSheet.getRange(trashPointer, trashFaculty).setValue(Faculty);
-    trashSheet.getRange(trashPointer, trashProgram).setValue(Program);
-    trashSheet.getRange(trashPointer, trashTrainingType).setValue(TrainingType);
-    trashSheet.getRange(trashPointer, trashTrainingDate).setValue(TrainingDate);
-    trashSheet.getRange(trashPointer, trashInstructor).setValue(Instructor);
-    trashSheet.getRange(trashPointer, trashCourse).setValue(Course);
-    trashSheet.getRange(trashPointer, trashSection).setValue(Section);
-    trashSheet.getRange(trashPointer, trashWorkshop).setValue(Workshop);
-    trashSheet.getRange(trashPointer, trashWorkstation).setValue(Workstation);
-    trashSheet.getRange(trashPointer, trashRemarks).setValue(Remarks);
-    trashSheet.getRange(trashPointer, trashDuplicate).setValue(Duplicate);
 }
