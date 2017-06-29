@@ -12,8 +12,7 @@ function duplicateFinder() {
     var arrOperatingRecords = operatingSheet.getRange(2, 1, 3321, 17).getValues();
 
     //Variables for the current record
-    var operatingPointer,
-        TrainingID = 0,
+    var TrainingID = 0,
         StudentID = 1,
         FullName = 2,
         FirstName = 3,
@@ -31,52 +30,47 @@ function duplicateFinder() {
         Remarks =  15,
         Duplicate = 16;
 
-    //Variables for the record comparison
-    var comparisonPointer,
-
     //Variables for looping
-    var opCounter,
-        coCounter,
-        opLimit,
-        coLimit;
+    var operatingPointer,
+        comparisonPointer,
+        lastRecord = arrOperatingRecords.length;
 
     //loop: Get current record
-    for (opCounter = 0; opCounter <= opLimit; opLimit++) {
+    for (operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
 
         //loop through to find a duplicate
-        for (coCounter = 0; coCounter <= coLimit; coLimit++) {
+        for (comparisonPointer = 1; comparisonPointer < lastRecord; comparisonPointer++) {
             
             //if duplicate found
-            if (arrOperatingRecords[opCounter][StudentID] == arrOperatingRecords[coCounter][StudentID] &&
-                arrOperatingRecords[opCounter][FirstName] == arrOperatingRecords[coCounter][FirstName] &&
-                arrOperatingRecords[opCounter][LastName] == arrOperatingRecords[coCounter][LastName]   &&
-                arrOperatingRecords[opCounter][TrainingDate] == arrOperatingRecords[coCounter][TrainingDate] &&
-                arrOperatingRecords[opCounter][TrainingType] == arrOperatingRecords[coCounter][TrainingType]) {
+            if (arrOperatingRecords[operatingPointer][StudentID] == arrOperatingRecords[comparisonPointer][StudentID] &&
+                arrOperatingRecords[operatingPointer][FirstName] == arrOperatingRecords[comparisonPointer][FirstName] &&
+                arrOperatingRecords[operatingPointer][LastName] == arrOperatingRecords[comparisonPointer][LastName]   &&
+                arrOperatingRecords[operatingPointer][TrainingDate] == arrOperatingRecords[comparisonPointer][TrainingDate] &&
+                arrOperatingRecords[operatingPointer][TrainingType] == arrOperatingRecords[comparisonPointer][TrainingType]) {
                 
                 //write the record on removed sheet (next empty)
-                trashWriter(arrOperatingRecords[coCounter][TrainingID],
-                            arrOperatingRecords[coCounter][StudentID],
-                            arrOperatingRecords[coCounter][FullName],
-                            arrOperatingRecords[coCounter][FirstName],
-                            arrOperatingRecords[coCounter][LastName],
-                            arrOperatingRecords[coCounter][Email],
-                            arrOperatingRecords[coCounter][Faculty],
-                            arrOperatingRecords[coCounter][Program],
-                            arrOperatingRecords[coCounter][TrainingType],
-                            arrOperatingRecords[coCounter][TrainingDate],
-                            arrOperatingRecords[coCounter][Instructor],
-                            arrOperatingRecords[coCounter][Course],
-                            arrOperatingRecords[coCounter][Section],
-                            arrOperatingRecords[coCounter][Workshop],
-                            arrOperatingRecords[coCounter][Workstation],
-                            arrOperatingRecords[coCounter][Remarks],
-                            arrOperatingRecords[coCounter][Duplicate]);
+                trashWriter(arrOperatingRecords[comparisonPointer][TrainingID],
+                            arrOperatingRecords[comparisonPointer][StudentID],
+                            arrOperatingRecords[comparisonPointer][FullName],
+                            arrOperatingRecords[comparisonPointer][FirstName],
+                            arrOperatingRecords[comparisonPointer][LastName],
+                            arrOperatingRecords[comparisonPointer][Email],
+                            arrOperatingRecords[comparisonPointer][Faculty],
+                            arrOperatingRecords[comparisonPointer][Program],
+                            arrOperatingRecords[comparisonPointer][TrainingType],
+                            arrOperatingRecords[comparisonPointer][TrainingDate],
+                            arrOperatingRecords[comparisonPointer][Instructor],
+                            arrOperatingRecords[comparisonPointer][Course],
+                            arrOperatingRecords[comparisonPointer][Section],
+                            arrOperatingRecords[comparisonPointer][Workshop],
+                            arrOperatingRecords[comparisonPointer][Workstation],
+                            arrOperatingRecords[comparisonPointer][Remarks],
+                            arrOperatingRecords[comparisonPointer][Duplicate]);
 
                 //get the row number from array position (+1)
+                operatingSheet.deleteRow(comparisonPointer+1);
 
-                
-
-                //delete the row with the records (mind: when a row is deleted the target should decrement by one)
+                //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
                 arrOperatingRecords.splice(comparisonPointer,1);
             }
         }
