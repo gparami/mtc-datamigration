@@ -69,7 +69,7 @@ function duplicateFinder() {
                 operatingSheet.deleteRow(comparisonPointer+2);
 
                 //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
-                arrOperatingRecords[].splice(comparisonPointer,1);
+                arrOperatingRecords.splice(comparisonPointer,1);
                 lastRecord--;
             }
         }
