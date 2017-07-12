@@ -1,4 +1,9 @@
 /**
+ * duplicateCalculator
+ * finds possible duplicates and allocates how much does it match with the other record
+ */
+
+/**
  * duplicateFinder
  * finds possible duplicates and flags records for review.
  */
@@ -39,11 +44,27 @@ function duplicateFinder() {
 
         //loop through to find a duplicate
         for (var comparisonPointer = operatingPointer + 1 ; comparisonPointer < lastRecord; comparisonPointer++) {
+
+            var operatingStudentID = arrOperatingRecords[operatingPointer][posStudentID];
+            var comparisonStudentID = arrOperatingRecords[comparisonPointer][posStudentID];
+
+            var operatingFirstName = arrOperatingRecords[operatingPointer][posFirstName];
+            var operatingFirstName = arrOperatingRecords[comparisonPointer][posFirstName];
+            
+            var operatingLastName = arrOperatingRecords[operatingPointer][posLastName];
+            var operatingLastName = arrOperatingRecords[comparisonPointer][posLastName];
+
+            var operatingTrainingDate = arrOperatingRecords[operatingPointer][posTrainingDate];
+            var comparisonTrainingDate = arrOperatingRecords[comparisonPointer][posTrainingDate];
+
+            var operatingTrainingType = arrOperatingRecords[operatingPointer][posTrainingType];
+            var comparisonTrainingType = arrOperatingRecords[comparisonPointer][posTrainingType];
             
             //if duplicate found
-            if (arrOperatingRecords[operatingPointer][posStudentID] == arrOperatingRecords[comparisonPointer][posStudentID] &&
-                arrOperatingRecords[operatingPointer][posFirstName] == arrOperatingRecords[comparisonPointer][posFirstName] &&
-                arrOperatingRecords[operatingPointer][posLastName] == arrOperatingRecords[comparisonPointer][posLastName]   &&
+            if (arrOperatingRecords[operatingPointer][posStudentID] != "" &&
+                arrOperatingRecords[operatingPointer][posStudentID] == arrOperatingRecords[comparisonPointer][posStudentID] &&
+                //arrOperatingRecords[operatingPointer][posFirstName] == arrOperatingRecords[comparisonPointer][posFirstName] &&
+                //arrOperatingRecords[operatingPointer][posLastName] == arrOperatingRecords[comparisonPointer][posLastName]   &&
                 arrOperatingRecords[operatingPointer][posTrainingDate] == arrOperatingRecords[comparisonPointer][posTrainingDate] &&
                 arrOperatingRecords[operatingPointer][posTrainingType] == arrOperatingRecords[comparisonPointer][posTrainingType]) {
                 
