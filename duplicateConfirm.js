@@ -31,30 +31,27 @@ function duplicateConfirm() {
         posWorkstation = 14,
         posRemarks =  15,
         posDuplicate = 16;
-    
-        //Variables for looping
-    var lastRecord = arrTrashRecords.length;
 
     //loop: Get current record
-    for (var trashPointer = 0; trashPointer < lastRecord; trashPointer++) {
+    for (var trashPointer = 0; trashPointer < arrTrashRecords.length; trashPointer++) {
       
       var trashStudentID = arrTrashRecords[operatingPointer][posStudentID].toString();
-      var operatingFirstName = arrTrashRecords[operatingPointer][posFirstName].toString();
-      var operatingLastName = arrTrashRecords[operatingPointer][posLastName].toString();
-      var operatingTrainingDate = arrTrashRecords[operatingPointer][posTrainingDate].toString();
-      var operatingTrainingType = arrTrashRecords[operatingPointer][posTrainingType].toString();
+      var trashFirstName = arrTrashRecords[operatingPointer][posFirstName].toString();
+      var trashLastName = arrTrashRecords[operatingPointer][posLastName].toString();
+      var trashTrainingDate = arrTrashRecords[operatingPointer][posTrainingDate].toString();
+      var trashTrainingType = arrTrashRecords[operatingPointer][posTrainingType].toString();
 
         //loop through to find a duplicate
-        for (var comparisonPointer = operatingPointer + 1 ; comparisonPointer < lastRecord; comparisonPointer++) {
+        for (var comparisonPointer = 0 ; comparisonPointer < arrOperatingRecords.length; comparisonPointer++) {
           
-            var comparisonStudentID = arrTrashRecords[comparisonPointer][posStudentID].toString();
-            var comparisonFirstName = arrTrashRecords[comparisonPointer][posFirstName].toString();
-            var comparisonLastName = arrTrashRecords[comparisonPointer][posLastName].toString();
-            var comparisonTrainingDate = arrTrashRecords[comparisonPointer][posTrainingDate].toString();
-            var comparisonTrainingType = arrTrashRecords[comparisonPointer][posTrainingType].toString();
+            var comparisonStudentID = arrOperatingRecords[comparisonPointer][posStudentID].toString();
+            var comparisonFirstName = arrOperatingRecords[comparisonPointer][posFirstName].toString();
+            var comparisonLastName = arrOperatingRecords[comparisonPointer][posLastName].toString();
+            var comparisonTrainingDate = arrOperatingRecords[comparisonPointer][posTrainingDate].toString();
+            var comparisonTrainingType = arrOperatingRecords[comparisonPointer][posTrainingType].toString();
             
             //if duplicate found
-            if (trashStudentID != "" && trashStudentID == comparisonStudentID && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
+            if (trashStudentID != "" && trashStudentID == comparisonStudentID && trashTrainingDate == comparisonTrainingDate && trashTrainingType == comparisonTrainingType) {
                 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
@@ -83,7 +80,7 @@ function duplicateConfirm() {
                 arrOperatingRecords.splice(comparisonPointer,1);
                 lastRecord--;
                 
-            } else if (trashStudentID == "" && operatingFirstName == comparisonFirstName && operatingLastName == comparisonLastName && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
+            } else if (trashStudentID == "" && trashFirstName == comparisonFirstName && trashLastName == comparisonLastName && trashTrainingDate == comparisonTrainingDate && trashTrainingType == comparisonTrainingType) {
 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
