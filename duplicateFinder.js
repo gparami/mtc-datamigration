@@ -49,10 +49,10 @@ function duplicateFinder() {
             var comparisonStudentID = arrOperatingRecords[comparisonPointer][posStudentID];
 
             var operatingFirstName = arrOperatingRecords[operatingPointer][posFirstName];
-            var operatingFirstName = arrOperatingRecords[comparisonPointer][posFirstName];
+            var comparisonFirstName = arrOperatingRecords[comparisonPointer][posFirstName];
             
             var operatingLastName = arrOperatingRecords[operatingPointer][posLastName];
-            var operatingLastName = arrOperatingRecords[comparisonPointer][posLastName];
+            var comparisonLastName = arrOperatingRecords[comparisonPointer][posLastName];
 
             var operatingTrainingDate = arrOperatingRecords[operatingPointer][posTrainingDate];
             var comparisonTrainingDate = arrOperatingRecords[comparisonPointer][posTrainingDate];
