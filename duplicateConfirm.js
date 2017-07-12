@@ -1,16 +1,17 @@
 /**
- * duplicateFinder
- * finds possible duplicates and flags records for review.
+ * duplicateConfirm
+ * finds if the removed duplicate is a real duplicate or not.
  */
-function duplicateFinder() {
+function duplicateConfirm() {
 
-    //Variables for the database connection
+     //Variables for the database connection
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
     var operatingSheet = activeSS.getSheetByName("JS_ONE_SHEET_TO_RULE_THEM_ALL");
     var trashSheet = activeSS.getSheetByName("REMOVED_RECORDS");
 
     //Variables for the data structure
-    var arrOperatingRecords = operatingSheet.getRange(2, 1, 3391, 17).getValues();
+    var arrTrashRecords = trashSheet.getRange(2, 1, 1290, 17).getValues();
+    var arrOperatingRecords = operatingSheet.getRange(2, 1, 1945, 17).getValues();
 
     //Variables for the current record
     var posTrainingID = 0,
@@ -30,30 +31,30 @@ function duplicateFinder() {
         posWorkstation = 14,
         posRemarks =  15,
         posDuplicate = 16;
-
-    //Variables for looping
-    var lastRecord = arrOperatingRecords.length;
+    
+        //Variables for looping
+    var lastRecord = arrTrashRecords.length;
 
     //loop: Get current record
-    for (var operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
+    for (var trashPointer = 0; trashPointer < lastRecord; trashPointer++) {
       
-      var operatingStudentID = arrOperatingRecords[operatingPointer][posStudentID].toString();
-      var operatingFirstName = arrOperatingRecords[operatingPointer][posFirstName].toString();
-      var operatingLastName = arrOperatingRecords[operatingPointer][posLastName].toString();
-      var operatingTrainingDate = arrOperatingRecords[operatingPointer][posTrainingDate].toString();
-      var operatingTrainingType = arrOperatingRecords[operatingPointer][posTrainingType].toString();
+      var trashStudentID = arrTrashRecords[operatingPointer][posStudentID].toString();
+      var operatingFirstName = arrTrashRecords[operatingPointer][posFirstName].toString();
+      var operatingLastName = arrTrashRecords[operatingPointer][posLastName].toString();
+      var operatingTrainingDate = arrTrashRecords[operatingPointer][posTrainingDate].toString();
+      var operatingTrainingType = arrTrashRecords[operatingPointer][posTrainingType].toString();
 
         //loop through to find a duplicate
         for (var comparisonPointer = operatingPointer + 1 ; comparisonPointer < lastRecord; comparisonPointer++) {
           
-            var comparisonStudentID = arrOperatingRecords[comparisonPointer][posStudentID].toString();
-            var comparisonFirstName = arrOperatingRecords[comparisonPointer][posFirstName].toString();
-            var comparisonLastName = arrOperatingRecords[comparisonPointer][posLastName].toString();
-            var comparisonTrainingDate = arrOperatingRecords[comparisonPointer][posTrainingDate].toString();
-            var comparisonTrainingType = arrOperatingRecords[comparisonPointer][posTrainingType].toString();
+            var comparisonStudentID = arrTrashRecords[comparisonPointer][posStudentID].toString();
+            var comparisonFirstName = arrTrashRecords[comparisonPointer][posFirstName].toString();
+            var comparisonLastName = arrTrashRecords[comparisonPointer][posLastName].toString();
+            var comparisonTrainingDate = arrTrashRecords[comparisonPointer][posTrainingDate].toString();
+            var comparisonTrainingType = arrTrashRecords[comparisonPointer][posTrainingType].toString();
             
             //if duplicate found
-            if (operatingStudentID != "" && operatingStudentID == comparisonStudentID && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
+            if (trashStudentID != "" && trashStudentID == comparisonStudentID && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
                 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
@@ -82,7 +83,7 @@ function duplicateFinder() {
                 arrOperatingRecords.splice(comparisonPointer,1);
                 lastRecord--;
                 
-            } else if (operatingStudentID == "" && operatingFirstName == comparisonFirstName && operatingLastName == comparisonLastName && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
+            } else if (trashStudentID == "" && operatingFirstName == comparisonFirstName && operatingLastName == comparisonLastName && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
