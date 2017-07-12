@@ -10,7 +10,7 @@ function duplicateFinder() {
     var trashSheet = activeSS.getSheetByName("REMOVED_RECORDS");
 
     //Variables for the data structure
-    var arrOperatingRecords = operatingSheet.getRange(2, 1, 3391, 17).getValues();
+    var arrOperatingRecords = operatingSheet.getRange(2, 1, 3321, 17).getValues();
 
     //Variables for the current record
     var posTrainingID = 0,
@@ -76,7 +76,8 @@ function duplicateFinder() {
                 trashSheet.getRange(trashPointer, posDuplicate+1).setValue(arrOperatingRecords[comparisonPointer][posDuplicate]);
 
                 //get the row number from array position (+2 because 1st for header 2nd for array)
-                operatingSheet.deleteRow(comparisonPointer+2);
+                operatingSheet.getRange(comparisonPointer, posDuplicate+1).setValue(trashPointer);
+                //operatingSheet.deleteRow(comparisonPointer+2);
 
                 //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
                 arrOperatingRecords.splice(comparisonPointer,1);
@@ -112,6 +113,8 @@ function duplicateFinder() {
                 lastRecord--;
 
             }
+
+            comparisonPointer = 0;
         }
     }
 }
