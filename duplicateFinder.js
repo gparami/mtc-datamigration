@@ -41,32 +41,24 @@ function duplicateFinder() {
 
     //loop: Get current record
     for (var operatingPointer = 0; operatingPointer < lastRecord; operatingPointer++) {
+      
+      var operatingStudentID = arrOperatingRecords[operatingPointer][posStudentID];
+      var operatingFirstName = arrOperatingRecords[operatingPointer][posFirstName];
+      var operatingLastName = arrOperatingRecords[operatingPointer][posLastName];
+      var operatingTrainingDate = arrOperatingRecords[operatingPointer][posTrainingDate];
+      var operatingTrainingType = arrOperatingRecords[operatingPointer][posTrainingType];
 
         //loop through to find a duplicate
         for (var comparisonPointer = operatingPointer + 1 ; comparisonPointer < lastRecord; comparisonPointer++) {
-
-            var operatingStudentID = arrOperatingRecords[operatingPointer][posStudentID];
+          
             var comparisonStudentID = arrOperatingRecords[comparisonPointer][posStudentID];
-
-            var operatingFirstName = arrOperatingRecords[operatingPointer][posFirstName];
             var comparisonFirstName = arrOperatingRecords[comparisonPointer][posFirstName];
-            
-            var operatingLastName = arrOperatingRecords[operatingPointer][posLastName];
             var comparisonLastName = arrOperatingRecords[comparisonPointer][posLastName];
-
-            var operatingTrainingDate = arrOperatingRecords[operatingPointer][posTrainingDate];
             var comparisonTrainingDate = arrOperatingRecords[comparisonPointer][posTrainingDate];
-
-            var operatingTrainingType = arrOperatingRecords[operatingPointer][posTrainingType];
             var comparisonTrainingType = arrOperatingRecords[comparisonPointer][posTrainingType];
             
             //if duplicate found
-            if (arrOperatingRecords[operatingPointer][posStudentID] != "" &&
-                arrOperatingRecords[operatingPointer][posStudentID] == arrOperatingRecords[comparisonPointer][posStudentID] &&
-                //arrOperatingRecords[operatingPointer][posFirstName] == arrOperatingRecords[comparisonPointer][posFirstName] &&
-                //arrOperatingRecords[operatingPointer][posLastName] == arrOperatingRecords[comparisonPointer][posLastName]   &&
-                arrOperatingRecords[operatingPointer][posTrainingDate] == arrOperatingRecords[comparisonPointer][posTrainingDate] &&
-                arrOperatingRecords[operatingPointer][posTrainingType] == arrOperatingRecords[comparisonPointer][posTrainingType]) {
+            if (operatingStudentID != "" && operatingStudentID == comparisonStudentID && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
                 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
@@ -94,6 +86,8 @@ function duplicateFinder() {
                 //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
                 arrOperatingRecords.splice(comparisonPointer,1);
                 lastRecord--;
+            } else if (operatingStudentID == "" && operatingFirstName == comparisonFirstName && operatingLastName == comparisonLastName && operatingTrainingDate == comparisonTrainingDate && operatingTrainingType == comparisonTrainingType) {
+
             }
         }
     }
