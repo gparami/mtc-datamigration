@@ -51,27 +51,11 @@ function duplicateConfirm() {
             var comparisonTrainingType = arrOperatingRecords[comparisonPointer][posTrainingType].toString();
             
             //if duplicate found
-            if (trashStudentID != "" && trashStudentID == comparisonStudentID && trashTrainingDate == comparisonTrainingDate && trashTrainingType == comparisonTrainingType) {
+            if (trashStudentID == comparisonStudentID && trashTrainingDate == comparisonTrainingDate && trashTrainingType == comparisonTrainingType) {
                 
                 //write the record on removed sheet (next empty)
                 var trashPointer = trashSheet.getLastRow()+1;
-                trashSheet.getRange(trashPointer, posTrainingID+1).setValue(arrOperatingRecords[comparisonPointer][posTrainingID]);
-                trashSheet.getRange(trashPointer, posStudentID+1).setValue(arrOperatingRecords[comparisonPointer][posStudentID]);
-                trashSheet.getRange(trashPointer, posFullName+1).setValue(arrOperatingRecords[comparisonPointer][posFullName]);
-                trashSheet.getRange(trashPointer, posFirstName+1).setValue(arrOperatingRecords[comparisonPointer][posFirstName]);
-                trashSheet.getRange(trashPointer, posLastName+1).setValue(arrOperatingRecords[comparisonPointer][posLastName]);
-                trashSheet.getRange(trashPointer, posEmail+1).setValue(arrOperatingRecords[comparisonPointer][posEmail]);
-                trashSheet.getRange(trashPointer, posFaculty+1).setValue(arrOperatingRecords[comparisonPointer][posFaculty]);
-                trashSheet.getRange(trashPointer, posProgram+1).setValue(arrOperatingRecords[comparisonPointer][posProgram]);
-                trashSheet.getRange(trashPointer, posTrainingType+1).setValue(arrOperatingRecords[comparisonPointer][posTrainingType]);
-                trashSheet.getRange(trashPointer, posTrainingDate+1).setValue(arrOperatingRecords[comparisonPointer][posTrainingDate]);
-                trashSheet.getRange(trashPointer, posInstructor+1).setValue(arrOperatingRecords[comparisonPointer][posInstructor]);
-                trashSheet.getRange(trashPointer, posCourse+1).setValue(arrOperatingRecords[comparisonPointer][posCourse]);
-                trashSheet.getRange(trashPointer, posSection+1).setValue(arrOperatingRecords[comparisonPointer][posSection]);
-                trashSheet.getRange(trashPointer, posWorkshop+1).setValue(arrOperatingRecords[comparisonPointer][posWorkshop]);
-                trashSheet.getRange(trashPointer, posWorkstation+1).setValue(arrOperatingRecords[comparisonPointer][posWorkstation]);
-                trashSheet.getRange(trashPointer, posRemarks+1).setValue(arrOperatingRecords[comparisonPointer][posRemarks]);
-                trashSheet.getRange(trashPointer, posDuplicate+1).setValue(arrOperatingRecords[comparisonPointer][posDuplicate]);
+                trashSheet.getRange(trashPointer, posDuplicate+1).setValue("Real Duplicate");
 
                 //get the row number from array position (+2 because 1st for header 2nd for array)
                 operatingSheet.deleteRow(comparisonPointer+2);
