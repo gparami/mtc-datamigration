@@ -6,8 +6,8 @@ function duplicateFinder() {
 
     //Variables for the database connection
     var activeSS = SpreadsheetApp.getActiveSpreadsheet();
-    var operatingSheet = activeSS.getSheetByName("JS_ONE_SHEET_TO_RULE_THEM_ALL");
-    var trashSheet = activeSS.getSheetByName("REMOVED_RECORDS");
+    var operatingSheet = activeSS.getSheetByName("JS_ONE_SHEET_2");
+    var trashSheet = activeSS.getSheetByName("REMOVED_RECORDS_2");
 
     //Variables for the data structure
     var arrOperatingRecords = operatingSheet.getRange(2, 1, 3321, 17).getValues();
@@ -106,7 +106,8 @@ function duplicateFinder() {
                 trashSheet.getRange(trashPointer, posDuplicate+1).setValue(arrOperatingRecords[comparisonPointer][posDuplicate]);
 
                 //get the row number from array position (+2 because 1st for header 2nd for array)
-                operatingSheet.deleteRow(comparisonPointer+2);
+                operatingSheet.getRange(comparisonPointer, posDuplicate+1).setValue(trashPointer);
+                //operatingSheet.deleteRow(comparisonPointer+2);
 
                 //delete the row with the records on array (mind: when a row is deleted the target should decrement by one)
                 arrOperatingRecords.splice(comparisonPointer,1);
